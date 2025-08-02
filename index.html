@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="9nC8ZmbJn53iL6jEoPh0GI5TpBOeKJ7EyjmcVEAAy34" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Fat & Fitness Planner by Namit Tapdiya</title>
+  <style>
+    :root {
+      --bg:#e3f2fd;
+      --card:#ffffff;
+      --radius:16px;
+      --shadow:0 20px 40px -10px rgba(100,100,125,0.15);
+      --text:#2c3e50;
+      --muted:#5f6f88;
+      --primary:#b3d9ff; /* softer pastel blue */
+      --secondary:#d0e8ff; /* light blue accent */
+      --accent:#c8e6ff; /* pastel light blue */
+      --border:rgba(0,0,0,0.05);
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;background:linear-gradient(135deg,var(--accent) 0%, var(--bg) 80%);color:var(--text);min-height:100%;}
+    .container{max-width:1100px;margin:0 auto;padding:1rem 1rem;}
+    header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;}
+    h1{margin:0;font-size:1.9rem;letter-spacing:0.5px;}
+    .tagline{font-size:.9rem;color:var(--muted);}
+    .card{background:var(--card);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem;}
+    .grid{display:grid;gap:1.5rem;}
+    .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
+    label{display:block;font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+    input, select{width:100%;padding:.65rem .8rem;border:1px solid var(--border);border-radius:10px;font-size:1rem;outline:none;}
+    button{background:linear-gradient(135deg,#4a90e2,#357ab8);border:none;color:#fff;padding:.9rem 1.4rem;border-radius:12px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:6px;transition:filter .2s;box-shadow:0 15px 35px -5px rgba(53,122,184,0.6);}
+    button:hover{filter:brightness(1.05);}    
+    .badge{display:inline-block;background:var(--secondary);color:#fff;padding:4px 10px;border-radius:999px;font-size:.6rem;font-weight:700;margin-right:4px;}
+    .result-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .small{font-size:.85rem;}
+    .pill{background:var(--primary);color:#fff;padding:6px 14px;border-radius:50px;font-weight:600;}
+    .plan{margin-top:0.5rem;}
+    .week{background:rgba(255,255,255,0.9);border-radius:12px;padding:10px;margin-bottom:8px;border:1px solid var(--border);}
+    .flex{display:flex;gap:1rem;}
+    .chip{background:var(--accent);padding:6px 12px;border-radius:999px;font-size:.7rem;}
+    .footer{margin-top:3rem;text-align:center;font-size:.85rem;color:var(--muted);}
+    .goal-box{display:inline-block;background:#3b6fa5;padding:10px 18px;border-radius:12px;color:#fff;font-weight:700;font-size:0.9rem;box-shadow:0 10px 30px -5px rgba(59,111,165,0.5);} 
+    .tag{background:var(--accent);padding:4px 10px;border-radius:8px;font-size:.6rem;margin-right:4px;}
+    .grid-2{grid-template-columns:1fr 1fr;}
+    .pill-good{background:#6fcf97;color:#fff;border-radius:50px;padding:6px 14px;}
+    .pill-warning{background:#f5a623;color:#fff;border-radius:50px;padding:6px 14px;}
+    .pill-bad{background:#eb5757;color:#fff;border-radius:50px;padding:6px 14px;}
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="flex:1; text-align:center;">
+        <h1>Body Fat & Fitness Planner</h1>
+        <div class="tagline">Personalized diet & exercise based on body fat percentage</div>
+        <div class="goal-box" style="margin:8px auto; display:inline-block;">By Namit Tapdiya</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Enter Your Details</h2>
+      <div class="grid grid-2">
+        <div class="inputs">
+          <div>
+            <label>Gender</label>
+            <select id="gender"><option value="male">Male</option><option value="female">Female</option></select>
+          </div>
+          <div>
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" placeholder="e.g., 55" />
+          </div>
+          <div>
+            <label>Height - Feet</label>
+            <input type="number" id="feet" placeholder="e.g., 5" />
+          </div>
+          <div>
+            <label>Height - Inches</label>
+            <input type="number" id="inches" placeholder="e.g., 4" />
+          </div>
+          <div>
+            <label>Age (years)</label>
+            <input type="number" id="age" placeholder="e.g., 16" />
+          </div>
+          <div>
+            <label>Diet Preference</label>
+            <select id="diet"><option value="veg">Veg</option><option value="non-veg">Non-Veg</option><option value="both">Both</option></select>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;">
+          <p style="margin:0;">This tool first computes your body fat percentage using the Deurenberg BMI-based formula, classifies your body composition, infers a goal automatically (bulk/maintain/cut), and then generates a diet & 4-week fitness plan tailored to your preference and status (including obese-aware modifications).</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem;">
+        <button onclick="compute()">Generate Plan</button>
+      </div>
+    </div>
+
+    <div id="output" style="display:none;">
+      <div class="card">
+        <h2 style="margin-top:0;">Summary</h2>
+        <div class="result-row">
+          <div class="card" style="flex:1;min-width:180px;">
+            <div><strong>Body Fat %</strong></div>
+            <div id="bf" style="font-size:1.5rem;">--</div>
+          </div>
+          <div class="card" style="flex:1;min-width:180px;">
+            <div><strong>BMI</strong></div>
+            <div id="bmi" style="font-size:1.5rem;">--</div>
+          </div>
+          <div class="card" style="flex:1;min-width:180px;">
+            <div><strong>Category</strong></div>
+            <div id="category" style="font-size:1.2rem;">--</div>
+          </div>
+          <div class="card" style="flex:1;min-width:180px;">
+            <div><strong>Inferred Goal</strong></div>
+            <div id="goal" style="font-size:1.2rem;">--</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;">
+          <div class="card" style="flex:2;min-width:220px;">
+            <div><strong>Calories</strong></div>
+            <div id="calories" style="font-size:1.2rem;">-- kcal</div>
+          </div>
+          <div class="card" style="flex:1;min-width:140px;">
+            <div><strong>Macros</strong></div>
+            <div id="macros" style="font-size:1rem;">--</div>
+          </div>
+          <div class="card" style="flex:1;min-width:140px;">
+            <div><strong>Water</strong></div>
+            <div id="water" style="font-size:1rem;">-- ml</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">Diet Plan</h2>
+        <div id="dietPlan"></div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">4-Week Fitness Plan</h2>
+        <div id="fitnessPlan"></div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">Tips</h2>
+        <ul id="tips">
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">Designed and powered by Namit Tapdiya • Use responsibly; this is an estimate, consult professional for medical decisions.</div>
+  </div>
+
+  <script>
+    function feetInchesToM(feet, inches){ return (feet * 12 + inches) * 0.0254; }
+    function bodyFatPercentage(weight, feet, inches, age, gender){
+      const heightM = feetInchesToM(feet, inches);
+      const bmi = weight / (heightM * heightM);
+      const g = gender === 'male' ? 1 : 0;
+      const bf = 1.20 * bmi + 0.23 * age - 10.8 * g - 5.4;
+      return {bf: parseFloat(bf.toFixed(2)), bmi: parseFloat(bmi.toFixed(2)), heightM};
+    }
+    function classifyBF(bf, gender){
+      if(gender === 'male'){
+        if(bf < 6) return 'Too low';
+        if(bf <= 13) return 'Athletic';
+        if(bf <= 17) return 'Fitness';
+        if(bf <= 24) return 'Average';
+        return 'Obese';
+      } else {
+        if(bf < 14) return 'Too low';
+        if(bf <= 20) return 'Athletic';
+        if(bf <= 24) return 'Fitness';
+        if(bf <= 31) return 'Average';
+        return 'Obese';
+      }
+    }
+    function inferGoal(category){
+      if(category === 'Obese') return 'cut';
+      if(category === 'Too low') return 'bulk';
+      return 'maintain';
+    }
+    function estimateBMR(weight, heightM, age, gender){
+      const heightCm = heightM * 100;
+      if(gender === 'male') return 10 * weight + 6.25 * heightCm - 5 * age + 5;
+      return 10 * weight + 6.25 * heightCm - 5 * age - 161;
+    }
+    function calorieTarget(bmr, goal, obese){
+      const base = bmr * 1.4;
+      if(goal === 'bulk') return base + 250;
+      if(goal === 'cut') return obese ? Math.max(1200, base - 500) : Math.max(1200, base - 300);
+      return base;
+    }
+    function macroSplit(calories, weight, goal){
+      const proteinG = goal === 'cut' ? 1.8 * weight : 1.6 * weight;
+      const proteinCals = proteinG * 4;
+      const fatCals = 0.25 * calories;
+      const fatG = fatCals / 9;
+      const remaining = calories - (proteinCals + fatCals);
+      const carbG = remaining > 0 ? remaining / 4 : 0;
+      return {protein: Math.round(proteinG), fat: Math.round(fatG), carbs: Math.round(carbG)};
+    }
+    function waterIntake(weight){ return Math.round(35 * weight); }
+
+    function generateDietPlan(goal, dietPref, category){
+      const obese = category === 'Obese';
+      const plan = [];
+      function portionAdjust(txt){ return obese && goal === 'cut' ? txt + ' (smaller portions, high-fiber focus)' : txt; }
+      if(dietPref === 'veg'){
+        plan.push('Breakfast: ' + portionAdjust('Oats with milk, chia seeds, nuts, and paneer/tofu'));
+        plan.push('Mid-morning Snack: Sprouts or low-fat yogurt with cucumber');
+        plan.push('Lunch: ' + portionAdjust('Roti/rice + dal/beans + vegetables + paneer/tofu'));
+        plan.push('Afternoon Snack: Apple or roasted chickpeas');
+        plan.push('Dinner: ' + portionAdjust('Mixed vegetable stir-fry + lentils or soy chunks'));
+      } else if(dietPref === 'non-veg'){
+        plan.push('Breakfast: ' + portionAdjust('Oats with milk and boiled eggs or chicken sausage'));
+        plan.push('Mid-morning Snack: Yogurt or boiled eggs with a small fruit');
+        plan.push('Lunch: ' + portionAdjust('Controlled rice/roti + grilled chicken/fish + vegetables'));
+        plan.push('Afternoon Snack: Protein shake or egg whites');
+        plan.push('Dinner: ' + portionAdjust('Light grilled meat/fish + salad'));
+      } else {
+        plan.push('Breakfast: ' + portionAdjust('Oats with milk, nuts, plus eggs or paneer'));
+        plan.push('Mid-morning Snack: Yogurt or sprouts with a boiled egg');
+        plan.push('Lunch: ' + portionAdjust('Portioned rice/roti + dal + lean meat/fish or paneer + veggies'));
+        plan.push('Afternoon Snack: Smoothie with whey/soy protein and fruit');
+        plan.push('Dinner: ' + portionAdjust('Quinoa + tofu/chicken + mixed veggies'));
+      }
+      if(goal === 'bulk'){
+        plan.push(dietPref === 'veg' ? 'Pre-bed: Milk with nut butter or cottage cheese (paneer).' : 'Pre-bed: Cottage cheese or casein-rich dairy/milk.');
+      } else if(goal === 'cut'){
+        plan.push('If hungry: Green tea, cucumber slices, or high-fiber veggies.');
+      }
+      if(obese && goal === 'cut'){
+        plan.push('Note: Avoid sugary drinks, chew slowly, prioritize vegetables for fullness.');
+      }
+      return plan;
+    }
+
+    function generateFitnessPlan(goal, category){
+      const obese = category === 'Obese';
+      const weeks = {};
+      for(let week=1; week<=4; week++){
+        if(goal === 'bulk'){
+          weeks['Week ' + week] = [
+            'Mon: Full-body strength (progressive overload)',
+            'Tue: Light cardio + core',
+            'Wed: Upper body hypertrophy',
+            'Thu: Mobility / rest',
+            'Fri: Lower body strength',
+            'Sat: Moderate cardio + circuit',
+            'Sun: Rest'
+          ];
+        } else if(goal === 'cut'){
+          if(obese){
+            weeks['Week ' + week] = [
+              `Mon: Brisk walking 20-${25 + week*2} min + low-impact bodyweight`,
+              'Tue: Resistance with bands/bodyweight (form focus)',
+              `Wed: Low-intensity steady-state cardio 25-${30 + week*2} min + light core`,
+              'Thu: Mobility and flexibility',
+              'Fri: Interval walk (walk 2 min, moderate 1 min) x 6-8',
+              'Sat: Stretching + active recovery',
+              'Sun: Rest'
+            ];
+          } else {
+            weeks['Week ' + week] = [
+              'Mon: HIIT + bodyweight circuit',
+              'Tue: Upper body resistance',
+              'Wed: Steady-state cardio + core',
+              'Thu: Lower body strength + plyometrics',
+              'Fri: Circuit or interval cardio',
+              'Sat: Light cardio + mobility',
+              'Sun: Rest'
+            ];
+          }
+        } else {
+          weeks['Week ' + week] = [
+            'Mon: Full-body strength (moderate)',
+            'Tue: Cardio (20-30 min)',
+            'Wed: Upper body push/pull',
+            'Thu: Core + mobility',
+            'Fri: Lower body strength',
+            'Sat: Mixed cardio + light resistance',
+            'Sun: Rest'
+          ];
+        }
+      }
+      return weeks;
+    }
+
+    function compute(){
+      const gender = document.getElementById('gender').value;
+      const weight = parseFloat(document.getElementById('weight').value);
+      const feet = parseInt(document.getElementById('feet').value,10);
+      const inches = parseInt(document.getElementById('inches').value,10);
+      const age = parseInt(document.getElementById('age').value,10);
+      const diet = document.getElementById('diet').value;
+      if(isNaN(weight)||isNaN(feet)||isNaN(inches)||isNaN(age)){
+        alert('Please fill all numeric fields correctly.');
+        return;
+      }
+      const {bf,bmi,heightM} = bodyFatPercentage(weight, feet, inches, age, gender);
+      const category = classifyBF(bf, gender);
+      const goal = inferGoal(category);
+      const obese = category === 'Obese';
+      const bmr = estimateBMR(weight, heightM, age, gender);
+      const calories = calorieTarget(bmr, goal, obese);
+      const macros = macroSplit(calories, weight, goal);
+      const water = waterIntake(weight);
+      const dietPlan = generateDietPlan(goal, diet, category);
+      const fitnessPlan = generateFitnessPlan(goal, category);
+
+      // populate
+      document.getElementById('bf').innerText = bf + '%';
+      document.getElementById('bmi').innerText = bmi;
+      document.getElementById('category').innerText = category;
+      document.getElementById('goal').innerText = goal.charAt(0).toUpperCase()+goal.slice(1);
+      document.getElementById('calories').innerText = Math.round(calories) + ' kcal';
+      document.getElementById('macros').innerText = `P: ${macros.protein}g  F: ${macros.fat}g  C: ${macros.carbs}g`;
+      document.getElementById('water').innerText = water + ' ml';
+
+      // diet plan
+      const dp = document.getElementById('dietPlan'); dp.innerHTML='';
+      dietPlan.forEach((line,i)=>{ const d=document.createElement('div'); d.innerText=(i+1)+'. '+line; dp.appendChild(d); });
+
+      // fitness plan
+      const fp = document.getElementById('fitnessPlan'); fp.innerHTML='';
+      for(const wk in fitnessPlan){
+        const wdiv=document.createElement('div'); wdiv.className='week';
+        const title=document.createElement('div'); title.innerHTML=`<strong>${wk}</strong>`; wdiv.appendChild(title);
+        fitnessPlan[wk].forEach(day=>{ const dd=document.createElement('div'); dd.innerText='- '+day; wdiv.appendChild(dd); });
+        fp.appendChild(wdiv);
+      }
+
+      // tips
+      const tipsEl=document.getElementById('tips'); tipsEl.innerHTML='';
+      if(category==='Obese'){
+        tipsEl.innerHTML += '<li>Start slow with low-impact cardio and control portions.</li>';
+        tipsEl.innerHTML += '<li>Avoid sugary drinks; prioritize veggies for fullness.</li>';
+      } else if(goal==='bulk'){
+        tipsEl.innerHTML += '<li>Eat slightly above maintenance and focus on progressive overload.</li>';
+      } else {
+        tipsEl.innerHTML += '<li>Maintain consistency; tweak if no progress in 2 weeks.</li>';
+      }
+      tipsEl.innerHTML += '<li>Sleep 7-9 hours and hydrate well.</li>';
+
+      document.getElementById('output').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
